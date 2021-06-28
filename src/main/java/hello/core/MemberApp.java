@@ -4,17 +4,24 @@ import hello.core.member.Grade;
 import hello.core.member.Member;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MemberApp {
 
     public static void main(String[] args) {
-        AppConfig appConfig = new AppConfig();
-        MemberService memberService = appConfig.memberService();
-        //appConfig에서 memberService() 를 달라그러면 MemberServiceImpl 을 만들고 거기에 MemoryMemberRepository 를 사용할거라고 주입해줌
+//        AppConfig appConfig = new AppConfig();
+//        MemberService memberService = appConfig.memberService();
 
-//        MemberService memberService = new MemberServiceImpl(); // AppConfig 생성전에는 MemberServiceImpl을 메인 메서드에서 직접 생성해줌
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class); // AppConfig 에 있는 환경설정 정보를 가지고 스프링이 AppConfig 에 @Bean  붙은 애들을 객체로 스프링 컨테이너에서 관리해줌
+        MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+        /* AppConfig 에서 스프링 컨테이너에 이름으로 등록된  "memberService" 객체를 찾음.
+        key는 이름 이고 value는 객체 인스턴스로 스프링 컨테이너에 등록.
+         MemberService.class 는 타입.
+         스프링 컨테이너에서 꺼낼때는 이름과 타입 주고 꺼냄냄         */
 
-        Member member = new Member(1L, "memberA", Grade.VIP); // id는 1임 . Long 타입이니까 뒤에 L 붙혀준 것. 안 붙히면 오류.
+
+        Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
         Member findMember = memberService.findMember(1L);
