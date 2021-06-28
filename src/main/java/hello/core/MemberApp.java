@@ -18,7 +18,7 @@ public class MemberApp {
         /* AppConfig 에서 스프링 컨테이너에 이름으로 등록된  "memberService" 객체를 찾음.
         key는 이름 이고 value는 객체 인스턴스로 스프링 컨테이너에 등록.
          MemberService.class 는 타입.
-         스프링 컨테이너에서 꺼낼때는 이름과 타입 주고 꺼냄냄         */
+         스프링 컨테이너에서 꺼낼때는 이름과 타입 주고 꺼냄         */
 
 
         Member member = new Member(1L, "memberA", Grade.VIP);

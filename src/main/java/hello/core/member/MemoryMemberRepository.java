@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class MemoryMemberRepository implements MemberRepository{
 
-    private static Map<Long, Member> store = new HashMap<>();
+    private static Map<Long, Member> store = new HashMap<>(); //static 으로 선언되있으니, 인스턴스 숫자와 무관하게 클래스에 딱 1개 생성됨.
 
     @Override
     public void save(Member member) {
