@@ -1,16 +1,18 @@
 package hello.core.member;
 
-public class MemberServiceImpl implements MemberService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-    // private final MemberRepository memberRepository = new MemoryMemberRepository();
-    /** 인터페이스와 구현체 모두에 의존하는 문제가 있음(추상화에도 의존하고 구체화에도 의존)
-     이젠 추상화에만 의존 , 구체적인것은 AppConfig 에서 결정 (아래 코드) */
+@Component
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    //@Component를 사용하면 바로 빈으 로 등록이 된다. 그러면 의존 관계를 기존 방식으로 주입할 수가 없다. 그래서 @Autowired로 연결
+    @Autowired //ac.getBean(MemberRepository.class)
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-    } // 생성자를 통해서 memberRepositoty 에 어떤 구현체가 들어갈지 생성자를 통해서 결정
+    }
 
     @Override
     public void join(Member member) {
@@ -20,5 +22,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    //싱글톤 테스트 용도
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }
