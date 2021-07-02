@@ -5,6 +5,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 public class MemberServiceTest {
 
     MemberService memberService;
@@ -27,5 +31,12 @@ public class MemberServiceTest {
         //then
         Assertions.assertThat(member).isEqualTo(findMember);
 
+        Integer mc[] = {4, 2, 5, 1, 10};
+        Arrays.sort(mc, Collections.reverseOrder());
+        System.out.println("mc = " + Arrays.toString(mc));
+        Arrays.sort(mc,0,2);
+        System.out.println("mc = " + Arrays.toString(mc));
+
+        }
     }
-}
+
