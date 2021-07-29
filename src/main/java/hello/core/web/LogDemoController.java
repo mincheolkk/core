@@ -14,15 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 public class LogDemoController {
 
     private final LogDemoService logDemoService;
-    private final MyLogger myLogger;
-    // Mylogger 의 생존범위는 request 가 들어와서 나갈때까지
-    // 스프링 컨테이너가 뜨는 시점에는 request 가 없으므로 MyLogger 가 없음 .
-
-
+    private final ObjectProvider<MyLogger> myLoggerProvider;
+    // MyLogger 를 찾을 수 있는 DL 할 수 있는 애가 주입됨 .
 
     @RequestMapping("log-demo")
     @ResponseBody // 문자열을 그대로 보낼 수 있음 .
     public String logDemo(HttpServletRequest request) {
+        MyLogger myLogger = myLoggerProvider.getObject();
+        // 처음 MyLogger 가 사용됨 .
         String requestURL = request.getRequestURL().toString();
         myLogger.setRequestURL(requestURL);
 
